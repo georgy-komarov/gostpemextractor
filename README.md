@@ -54,4 +54,4 @@ docker build -t gostpemextractor ./
 ```
 docker run --rm -ti -v `pwd`:/work gostpemextractor -f certificate.pfx -p password [-s storage.001]
 ```
-
+Доступно и на докерхабе https://hub.docker.com/r/zazmaster/gostpemextractor
