@@ -148,9 +148,10 @@ RUN set -xe \
 
 COPY --from=BUILDER /usr/local/ssl/ /usr/local/ssl/
 COPY --from=BUILDER /usr/local/curl/ /usr/local/curl/
-COPY --from=BUILDER /usr/local/src/privkey2012 ./privkey2012
+COPY --from=BUILDER /usr/local/src/privkey2012 /usr/local/bin/privkey2012
 
 RUN set -xe \
+    && ln -sf /usr/local/bin/privkey2012 /usr/bin/privkey2012 \
     && ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl \
     && ln -sf /usr/local/curl/bin/curl /usr/bin/curl
 
@@ -183,5 +184,10 @@ RUN set -xe \
     && update-ca-certificates \
     && rm -f /usr/local/share/ca-certificates/gost-ca-certificates.pem
 
-ENTRYPOINT ["./privkey2012"]
+# Startup script
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
 
+WORKDIR /work
+
+ENTRYPOINT ["/run.sh"]
