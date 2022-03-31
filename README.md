@@ -43,7 +43,7 @@ primary2.key
 ## Сборка
 
 ```
-docker build -t gostpemextractor ./
+docker build -t zazmaster/gostpemextractor ./
 ```
 
 ## Запуск
@@ -52,6 +52,10 @@ docker build -t gostpemextractor ./
 
 При успехе в текущей директории создаются два файла certificate.crt.pem и certificate.key.pem
 ```
-docker run --rm -ti -v `pwd`:/work gostpemextractor -f certificate.pfx -p password [-s storage.001]
+docker run --rm -ti -v `pwd`:/work zazmaster/gostpemextractor -f certificate.pfx -p password [-s storage.001]
+```
+Пример предыдущей команды для Windows:
+```
+docker run --rm -ti -v C:\temp\cert\1231:/work zazmaster/gostpemextractor -f certificate.pfx -p password -s 10589000.001
 ```
 Доступно и на докерхабе https://hub.docker.com/r/zazmaster/gostpemextractor
