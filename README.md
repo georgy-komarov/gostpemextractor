@@ -48,14 +48,17 @@ docker build -t zazmaster/gostpemextractor ./
 
 ## Запуск
 
-Файл certificate.pfx и диреткория storage.001 находятся в текущей директории
-
-При успехе в текущей директории создаются два файла certificate.crt.pem и certificate.key.pem
+Файл certificate.pfx и диреткория storage.001 находятся в текущей директории. При успехе в текущей директории создаются два файла certificate.crt.pem и certificate.key.pem
+Пример при наличии pfx файла и хранилища закрытого ключа:
 ```
-docker run --rm -ti -v `pwd`:/work zazmaster/gostpemextractor -f certificate.pfx -p password [-s storage.001]
+docker run --rm -ti -v `pwd`:/work zazmaster/gostpemextractor -f certificate.pfx -p password -s storage.001
 ```
-Пример предыдущей команды для Windows:
+Пример при наличии только pfx файла с включенным в него приватным ключом:
 ```
-docker run --rm -ti -v C:\temp\cert\1231:/work zazmaster/gostpemextractor -f certificate.pfx -p password -s 10589000.001
+docker run --rm -ti -v `pwd`:/work zazmaster/gostpemextractor -f certificate.pfx -p password 
+```
+Пример команды для Windows:
+```
+docker run --rm -ti -v C:\temp\cert\1231:/work zazmaster/gostpemextractor -f certificate.pfx -p password -s storage.001
 ```
 Доступно и на докерхабе https://hub.docker.com/r/zazmaster/gostpemextractor
