@@ -1,17 +1,19 @@
 #!/bin/bash
 
 if [ $# -eq 0 ]; then
-    echo "Usage: run.sh -f certificate.pfx -p password -s storage.001"
+    echo "Usage: run.sh -f certificate.pfx -p password -s storage.001 -l [256|512]"
     exit 1
 fi
 
-while getopts ":f:p:s:" opt; do
+while getopts ":f:p:s:l:" opt; do
   case $opt in
     f) fullname="$OPTARG"
     ;;
     p) password="$OPTARG"
     ;;
     s) storage="$OPTARG"
+    ;;
+	  l) alg="$OPTARG"
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
@@ -48,5 +50,9 @@ else
         else
             privkey2012 ${storage} ${password} > ${filename}.key.pem
         fi
+		if [ ${alg} ];
+		then
+			openssl pkcs12 -engine gost -export -inkey ${filename}.key.pem -in ${filename}.crt.pem -out ${filename}.p12 -password pass:${password} -keypbe gost89 -certpbe gost89 -macalg md_gost12_${alg}
+		fi
     fi
 fi
